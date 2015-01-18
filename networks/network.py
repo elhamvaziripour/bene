@@ -17,12 +17,14 @@ class Network(object):
                 if line.startswith('#'):
                     continue
                 fields  = line.split()
-                if len(fields) < 2:
+                if len(fields) < 4:
                     continue
                 start = self.get_node(fields[0])
-                for i in range(1,len(fields)):
+                for i in xrange(1, len(fields)-2,3):
                     end = self.get_node(fields[i])
-                    l = link.Link(self.address,start,endpoint=end)
+                    bandwidth_rate =  float(fields[i+1])
+                    propagation_delay =  float(fields[i+2])
+                    l = link.Link(self.address,start,endpoint=end,bandwidth=bandwidth_rate,propagation=propagation_delay)
                     self.address += 1
                     start.add_link(l)
                 
